@@ -17,7 +17,7 @@ class CreateTreasuresTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('tale');
-            //$table->int('value');
+            $table->integer('value');
             $table->timestamps();
         });
     }
