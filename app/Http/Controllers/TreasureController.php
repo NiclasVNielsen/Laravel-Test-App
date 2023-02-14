@@ -35,7 +35,18 @@ class TreasureController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Validation
+        $request->validate([
+            'title' => 'required',
+            'tale' => 'required',
+            'value' => 'required'
+        ]);
+
+        //Create
+        Treasure::create($request->all());
+
+        //Redirect
+        return redirect()->route('treasures.index')->with('noFire', 'Aaargh! The booty is stored');
     }
 
     /**
