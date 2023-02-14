@@ -14,7 +14,9 @@ class TreasureController extends Controller
      */
     public function index()
     {
-        //
+        $treasures = Treasure::latest()->paginate(5);
+
+        return view('treasures.index', compact('treasures'))->with(request()->input('page'));
     }
 
     /**
@@ -57,7 +59,7 @@ class TreasureController extends Controller
      */
     public function show(Treasure $treasure)
     {
-        //
+        return view('treasures.show', compact('treasure'));
     }
 
     /**
@@ -68,7 +70,7 @@ class TreasureController extends Controller
      */
     public function edit(Treasure $treasure)
     {
-        //
+        return view('treasures.edit', compact('treasure'));
     }
 
     /**
@@ -80,7 +82,18 @@ class TreasureController extends Controller
      */
     public function update(Request $request, Treasure $treasure)
     {
-        //
+        //Validation
+        $request->validate([
+            'title' => 'required',
+            'tale' => 'required',
+            'value' => 'required'
+        ]);
+
+        //Update
+        $treasure->update($request->all());
+
+        //Redirect
+        return redirect()->route('treasures.index')->with('noFire', 'Aaargh! The booty was changed');
     }
 
     /**
@@ -91,6 +104,10 @@ class TreasureController extends Controller
      */
     public function destroy(Treasure $treasure)
     {
-        //
+        //Delete treasure
+        $treasure->delete();
+
+        //Redirect user & Display Yaaaii Message!
+        return redirect()->route('treasures.index')->with('noFire', 'Aaargh! The booty was buried and the place forgotten!');
     }
 }

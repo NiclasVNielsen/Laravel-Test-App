@@ -7,9 +7,6 @@
         <title>Laravel</title>
     </head>
     <body>
-        <h1>
-            Treasures
-        </h1>
         <div class="container">
             <br>
             @yield('content')
